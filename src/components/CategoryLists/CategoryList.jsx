@@ -22,15 +22,13 @@ const CategoryList = () => {
           (category) => category.categoryId !== categoryId
         );
         setCategories(updatedCategories);
-        // Display toast Message ------------>> to be done
         toast.success("Category deleted");
       } else {
-        // Display error toast message ------------>> to be done
         toast.error("Unable to delete category");
       }
     } catch (error) {
       console.error(error);
-      // Display error toast message ------------>> to be done
+      toast.error("Unable to delete category");
     }
   };
 
@@ -76,7 +74,7 @@ const CategoryList = () => {
 
                 <div className="flex-grow-1">
                   <h5 className="mb-1 text-white">{category.name}</h5>
-                  <p className="mb-0 text-white">5 Items</p>
+                  <p className="mb-0 text-white">{category.items} Items</p>
                 </div>
 
                 <div>
