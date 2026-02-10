@@ -63,7 +63,7 @@ const CategoryList = () => {
               className="card p-3"
               style={{ backgroundColor: category.bgColor }}
             >
-              <div className="d-flex align-item-center">
+              <div className="d-flex align-items-center">
                 <div style={{ marginRight: "15px" }}>
                   <img
                     src={category.imgUrl}

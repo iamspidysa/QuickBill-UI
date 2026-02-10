@@ -1,31 +1,42 @@
-import { useContext } from 'react';
-import './Explore.css';
-import { AppContext } from '../../Context/AppContext';
+import { useContext, useState } from "react";
+import "./Explore.css";
+import { AppContext } from "../../Context/AppContext";
+import DisplayCategory from "../../components/DisplayCategory/DisplayCategory";
+import DisplayItems from "../../components/DisplayItems/DisplayItems";
+import CustomerForm from "../../components/CustomerForm/CustomerForm";
+import CartItems from "../../components/CartItems/CartItems";
+import CartSummary from "../../components/CartSummary/CartSummary";
 
 const Explore = () => {
-
   const { categories } = useContext(AppContext);
-  console.log(categories);
-  
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [customerName, setCustomerName] = useState("");
+  const [mobileNumber, setMobileNumber] = useState("");
 
   return (
-    <div className="expore-container text-light">
+    <div className="explore-container text-light">
       <div className="left-column">
         <div className="first-row" style={{ overflowY: "auto" }}>
-          Category
+          <DisplayCategory
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+            categories={categories}
+          />
         </div>
         <hr className="horizontal-line" />
         <div className="second-row" style={{ overflowY: "auto" }}>
-          Item
+          <DisplayItems selectedCategory={selectedCategory} />
         </div>
       </div>
 
       <div className="right-column d-flex flex-column">
-        <div
-          className="customer-form-container"
-          style={{ height: "15%"}}
-        >
-          Customer Form
+        <div className="customer-form-container" style={{ height: "15%" }}>
+          <CustomerForm
+            customerName={customerName}
+            setCustomerName={setCustomerName}
+            mobileNumber={mobileNumber}
+            setMobileNumber={setMobileNumber}
+          />
         </div>
         <hr className="my-3 text-light" />
         <div
@@ -33,16 +44,17 @@ const Explore = () => {
           style={{
             height: "55%",
             overflowY: "auto",
-            
           }}
         >
-          Cart Item
+          <CartItems />
         </div>
-        <div
-          className="cart-summary-container"
-          style={{ height: "30%"}}
-        >
-          Cart Summary
+        <div className="cart-summary-container" style={{ height: "30%" }}>
+          <CartSummary
+            customerName={customerName}
+            setCustomerName={setCustomerName}
+            mobileNumber={mobileNumber}
+            setMobileNumber={setMobileNumber}
+          />
         </div>
       </div>
     </div>
