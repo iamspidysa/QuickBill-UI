@@ -1,0 +1,7 @@
+/* For hiding "Print" and "Close" button from order receipt pdf page. */
+
+@media print {
+    .receipt-popup .btn {
+        display: none;
+    }
+}

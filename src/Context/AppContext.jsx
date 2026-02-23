@@ -35,6 +35,10 @@ export const AppContextProvider = (props) => {
     setCartItems(cartItems.map(item => item.itemId === itemId ? {...item, quantity: newQuantity} : item));
   }
 
+  const clearCart = () => {
+    setCartItems([]);
+  }
+
   useEffect(() => {
     async function loadData() {
       /* This code checks if a JWT token and role exist in localStorage when the app starts.
@@ -70,6 +74,7 @@ export const AppContextProvider = (props) => {
     cartItems,
     removeFromCart,
     updateQuantity,
+    clearCart,
   };
 
   return (
