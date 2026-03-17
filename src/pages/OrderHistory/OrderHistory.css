@@ -3,6 +3,11 @@
     height: calc(100vh - 5rem);
     box-sizing: border-box;
     background-color: #2c3335;
+    overflow-y: auto;
+
+    /* Hide scrollbar but keep scroll */
+    scrollbar-width: none;       /* Firefox */
+    -ms-overflow-style: none;    /* IE/Edge */
 }
 
 .orders-history-container h2 {
@@ -11,7 +16,7 @@
 }
 
 .table {
-    margin-top: 20p;
+    margin-top: 20px;
 }
 
 .table th {
@@ -36,3 +41,14 @@
         white-space: nowrap;
     }
 }
+
+/* Good Looking Scroll Bar */
+
+/* .orders-history-container::-webkit-scrollbar {
+    width: 4px;
+}
+
+.orders-history-container::-webkit-scrollbar-thumb {
+    background: #666;
+    border-radius: 10px;
+} */
