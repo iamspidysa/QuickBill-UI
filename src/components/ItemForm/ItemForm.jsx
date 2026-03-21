@@ -108,6 +108,7 @@ const ItemForm = () => {
                     placeholder="Item Name"
                     onChange={onChangeHandler}
                     value={data.name}
+                    required
                   />
                 </div>
 
@@ -121,6 +122,7 @@ const ItemForm = () => {
                     className="form-control"
                     onChange={onChangeHandler}
                     value={data.categoryId}
+                    required
                   >
                     <option value="">--SELECT CATEGORY--</option>
                     {/* <option value="Category 1">Category 1</option>
@@ -145,6 +147,7 @@ const ItemForm = () => {
                     placeholder="&#8377;000.00"
                     onChange={onChangeHandler}
                     value={data.price}
+                    required
                   />
                 </div>
                 <div className="mb-3">

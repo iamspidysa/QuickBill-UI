@@ -90,6 +90,7 @@ const CategoryForm = () => {
                   placeholder="Category Name"
                   onChange={onChangeHandler}
                   value={data.name}
+                  required
                 />
               </div>
               <div className="mb-3">
@@ -104,6 +105,7 @@ const CategoryForm = () => {
                   placeholder="Write Content Here..."
                   onChange={onChangeHandler}
                   value={data.description}
+                  required
                 ></textarea>
               </div>
               {/* For Changing background Color. */}
