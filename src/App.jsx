@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import Menubar from "./components/Menubar/Menubar";
-import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import ManageCategories from "./pages/ManageCategories/ManageCategories";
 import ManageUsers from "./pages/ManageUsers/ManageUsers";
@@ -14,14 +14,14 @@ import NotFound from "./pages/NotFound/NotFound";
 
 // OUTSIDE App (top-level)
 const LoginRoute = ({ element, auth }) => {
-  if (auth.token) {
+  if (isValidToken(auth.token)) {
     return <Navigate to="/dashboard" replace />;
   }
   return element;
 };
 
 const ProtectedRoute = ({ element, allowedRoles, auth }) => {
-  if (!auth.token) {
+  if (!isValidToken(auth.token)) {
     return <Navigate to="/login" replace />;
   }
 
@@ -31,14 +31,20 @@ const ProtectedRoute = ({ element, allowedRoles, auth }) => {
 
   return element;
 };
-export default function App() {
-  const location = useLocation();
 
-  const {auth} = useContext(AppContext);
+const isValidToken = (token) => {
+  return token && token !== "null" && token !== "undefined";
+};
+export default function App() {
+  // const location = useLocation();
+
+  const { auth } = useContext(AppContext);
+
+  /* Render Issue */
 
   // const LoginRoute = ({element}) => {
   //   if(auth.token) {
-  //     return <Navigate to="/dashboard" replace/>;  
+  //     return <Navigate to="/dashboard" replace/>;
   //   }
   //   return element;
   // }
@@ -56,25 +62,67 @@ export default function App() {
 
   return (
     <div>
-      {location.pathname !== "/login" && <Menubar />}
-      <Toaster/>
+      {isValidToken(auth.token) && <Menubar />}
+      <Toaster />
       <Routes>
-        <Route path="/dashboard" element={<Dashboard/>} />
-        <Route path="/explore" element={<Explore/>} />
+        <Route
+          path="/dashboard"
+          element={<ProtectedRoute element={<Dashboard />} auth={auth} />}
+        />
+
+        <Route
+          path="/explore"
+          element={<ProtectedRoute element={<Explore />} auth={auth} />}
+        />
 
         {/* ADMIN ONLY ROUTES */}
-        <Route path="/category" element={<ProtectedRoute element={<ManageCategories/>} allowedRoles={['ROLE_ADMIN']} auth={auth}/>} />
-        <Route path="/users" element={<ProtectedRoute element={<ManageUsers/>} allowedRoles={['ROLE_ADMIN']} auth={auth}/>} />
-        <Route path="/items" element={<ProtectedRoute element={<ManageItems/>} allowedRoles={['ROLE_ADMIN']} auth={auth}/>} />
+        <Route
+          path="/category"
+          element={
+            <ProtectedRoute
+              element={<ManageCategories />}
+              allowedRoles={["ROLE_ADMIN"]}
+              auth={auth}
+            />
+          }
+        />
+        <Route
+          path="/users"
+          element={
+            <ProtectedRoute
+              element={<ManageUsers />}
+              allowedRoles={["ROLE_ADMIN"]}
+              auth={auth}
+            />
+          }
+        />
+        <Route
+          path="/items"
+          element={
+            <ProtectedRoute
+              element={<ManageItems />}
+              allowedRoles={["ROLE_ADMIN"]}
+              auth={auth}
+            />
+          }
+        />
 
-        <Route path="/login" element={<LoginRoute element={<Login/>} auth={auth}/>} />
-        <Route path="/orders" element={<OrderHistory/>} />
-        <Route path="/" element={<Dashboard/>} />
-        <Route path="*" element={<NotFound/>} />
+        <Route
+          path="/login"
+          element={<LoginRoute element={<Login />} auth={auth} />}
+        />
 
+        <Route
+          path="/orders"
+          element={<ProtectedRoute element={<OrderHistory />} auth={auth} />}
+        />
+        <Route
+          path="/"
+          element={<ProtectedRoute element={<Dashboard />} auth={auth} />}
+        />
+
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );
 }
-
-

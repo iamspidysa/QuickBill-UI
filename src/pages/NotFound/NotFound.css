@@ -5,7 +5,7 @@
     text-align: center;
     min-height: 100vh;
     /* background-color: #f8f9fa; */
-    background-color: #2C3335;;
+    background-color: #343a40;
 
     padding: 20px;
     overflow-y: hidden !important;
@@ -15,15 +15,15 @@
     max-width: 600px;
     padding: 40px;
     /* background: white; */
-    background: #292f31;
+    background: #343a40;
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
 }
 
 .not-found-title {
     font-size: 120px;
     font-weight: 700;
-    color: #dc3545;
+    color: #ff0019;
     margin: 0;
     line-height: 1
 }
@@ -31,12 +31,12 @@
 .not-found-subtitle {
     font-size: 32px;
     margin: 20px 0 10px;
-    color: #348a40;
+    color: #00ff22;
 }
 
 .not-found-message {
 font-size: 18px;
-color: #6c757d;
+color: #ffffff;
 margin-bottom: 30px;
 }
 
