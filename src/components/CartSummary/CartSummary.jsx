@@ -81,9 +81,9 @@ const CartSummary = ({
       customerName,
       phoneNumber: mobileNumber,
       cartItems,
-      subTotal: totalAmount,
-      tax,
-      grandTotal,
+      // subTotal: totalAmount,
+      // tax,
+      // grandTotal,
       paymentMethod: paymentMode.toUpperCase(),
     };
 
@@ -106,7 +106,7 @@ const CartSummary = ({
 
         //If razorpay sdk loaded - create order
         const razorpayResponse = await createRazorpayOrder({
-          amount: grandTotal,
+          orderId: savedData.orderId,
           currency: "INR",
         });
         const options = {

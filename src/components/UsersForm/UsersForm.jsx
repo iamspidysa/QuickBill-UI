@@ -8,7 +8,7 @@ const UsersForm = ({ setUsers }) => {
     name: "",
     email: "",
     password: "",
-    role: "ROLE_USER",
+    role: "USER",
   });
 
   const onChangeHandler = (e) => {
@@ -28,7 +28,7 @@ const UsersForm = ({ setUsers }) => {
         name: "",
         email: "",
         password: "",
-        role: "ROLE_USER",
+        role: "USER",
       });
     }catch(error){
       console.log(error);
