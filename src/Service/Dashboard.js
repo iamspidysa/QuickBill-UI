@@ -1,5 +1,11 @@
-import axios from "axios";
+// import axios from "axios";
 
+// export const fetchDashboard = async () => {
+//     return await axios.get("http://localhost:8080/api/v1.0/dashboard", {headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`}});
+// }
+
+import axiosInstance from "../api/axiosInstance";
+ 
 export const fetchDashboard = async () => {
-    return await axios.get("http://localhost:8080/api/v1.0/dashboard", {headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`}});
-}
+  return await axiosInstance.get("/dashboard");
+};

@@ -1,15 +1,16 @@
 // APIs calls to backend server
+// Axios instance created in axiosInstance.js, the interceptor only adds the header when a token exists in localStorage.
 
-import axios from "axios";
-
-export const addCategory = async(category) => {
-    return await axios.post(`http://localhost:8080/api/v1.0/admin/categories`, category , {headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`}});
-}
-
-export const deleteCategory = async(categoryId) => {
-    return await axios.delete(`http://localhost:8080/api/v1.0/admin/categories/${categoryId}`, {headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`}});
-}
-
-export const fetchCategory = async() => {
-    return await axios.get(`http://localhost:8080/api/v1.0/categories`, {headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`}});
-}
+import axiosInstance from "../api/axiosInstance";
+ 
+export const addCategory = async (category) => {
+  return await axiosInstance.post("/admin/categories", category);
+};
+ 
+export const deleteCategory = async (categoryId) => {
+  return await axiosInstance.delete(`/admin/categories/${categoryId}`);
+};
+ 
+export const fetchCategory = async () => {
+  return await axiosInstance.get("/categories");
+};
