@@ -1,8 +1,9 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { assets } from "../../assets/assets";
 import toast from "react-hot-toast";
 import { AppContext } from "../../Context/AppContext";
 import { addCategory } from "../../Service/CategoryService";
+import { validateImageFile } from "../../utils/fileValidation";
 
 const CategoryForm = () => {
   const {categories,setCategories} = useContext(AppContext);
@@ -13,10 +14,6 @@ const CategoryForm = () => {
     description: "",
     bgColor: "#2c2c2c",
   });
-
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
 
   const onChangeHandler = (e) => {
     const name = e.target.name;
@@ -53,7 +50,19 @@ const CategoryForm = () => {
     } finally {
       setLoading(false);
     }
-  }
+  };
+
+  const handleImageChange = (e) => {
+      const file = e.target.files[0];
+  
+      if (!validateImageFile(file)) {
+        e.target.value = "";
+        return;
+      }
+  
+      setImage(file);
+    };
+
   return (
     <div className="mx-2 mt-2">
       <div className="row">
@@ -75,7 +84,7 @@ const CategoryForm = () => {
                   name="image"
                   id="image"
                   className="form-control"
-                  onChange={(e) => setImage(e.target.files[0])}
+                  onChange={handleImageChange}
                 />
               </div>
               <div className="mb-3">

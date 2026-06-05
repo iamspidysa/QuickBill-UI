@@ -3,6 +3,7 @@ import { assets } from "../../assets/assets";
 import { AppContext } from "../../Context/AppContext";
 import toast from "react-hot-toast";
 import { addItem } from "../../Service/ItemService";
+import { validateImageFile } from "../../utils/fileValidation";
 
 const ItemForm = () => {
   const { categories, setItemsData, itemsData, setCategories } =
@@ -67,6 +68,18 @@ const ItemForm = () => {
       setLoading(false);
     }
   };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+
+    if (!validateImageFile(file)) {
+      e.target.value = "";
+      return;
+    }
+
+    setImage(file);
+  };
+
   return (
     <div
       className="item-form-container"
@@ -93,7 +106,7 @@ const ItemForm = () => {
                     id="image"
                     className="form-control"
                     hidden
-                    onChange={(e) => setImage(e.target.files[0])}
+                    onChange={handleImageChange}
                   />
                 </div>
                 <div className="mb-3">
