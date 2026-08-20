@@ -32,15 +32,18 @@ const CartSummary = ({
 
   const grandTotal = totalAmount + tax;
 
-  const clearAll = () => {
+  // Called once an order is successfully placed AND paid for (cash is paid
+  // instantly; UPI is paid once Razorpay verification succeeds). This is the
+  // single point where we show the receipt and reset the form for the next
+  // customer — there is no separate "place order" step, because placing the
+  // order and completing the payment are the same action from the cashier's
+  // point of view.
+  const finalizeOrder = (details) => {
+    setOrderDetails(details);
+    setShowPopup(true);
     setCustomerName("");
     setMobileNumber("");
     clearCart();
-  };
-
-  const placeOrder = () => {
-    setShowPopup(true);
-    clearAll();
   };
 
   const handlePrintReceipt = () => {
@@ -81,9 +84,8 @@ const CartSummary = ({
       customerName,
       phoneNumber: mobileNumber,
       cartItems,
-      // subTotal: totalAmount,
-      // tax,
-      // grandTotal,
+      // subTotal/tax/grandTotal are deliberately NOT sent — the backend
+      // computes these from DB item prices to prevent client-side tampering.
       paymentMethod: paymentMode.toUpperCase(),
     };
 
@@ -93,8 +95,8 @@ const CartSummary = ({
       const response = await createOrder(orderData);
       const savedData = response.data;
       if (response.status === 201 && paymentMode === "cash") {
-        toast.success("Order created successfully");
-        setOrderDetails(savedData);
+        toast.success("Order placed successfully");
+        finalizeOrder(savedData);
       } else if (response.status === 201 && paymentMode === "upi") {
         //Load Razorpay sdk
         const razorpayLoaded = await loadRazorpayScript();
@@ -117,7 +119,6 @@ const CartSummary = ({
           name: "Shri Hari Computers",
           description: "Order Payment",
           handler: async function (response) {
-            // TODO TO VERIFY PAYMENT
             await verifyPaymentHandler(response, savedData);
           },
           prefill: {
@@ -164,7 +165,7 @@ const CartSummary = ({
       const paymentResponse = await verifyPayment(paymentData);
       if (paymentResponse.status === 200) {
         toast.success("Payment successful");
-        setOrderDetails({
+        finalizeOrder({
           ...savedOrder,
           paymentDetails: {
             razorpayOrderId: response.razorpay_order_id,
@@ -202,11 +203,6 @@ const CartSummary = ({
       <div className="d-flex gap-3">
         <button className="btn btn-success flex-grow-1" onClick={ () => completePayment("cash")} disabled={isProcessing}>{isProcessing ? "Processing..." : "Cash"}</button>
         <button className="btn btn-primary flex-grow-1" onClick={ () => completePayment("upi")} disabled={isProcessing}>{isProcessing ? "Processing..." : "UPI"}</button>
-      </div>
-
-      {/* <ReceiptPopup /> */}
-      <div className="d-flex gap-3 mt-3">
-        <button className="btn btn-warning flex-grow-1" onClick={placeOrder} disabled={isProcessing || !orderDetails}>Place Order</button>
       </div>
 
       {

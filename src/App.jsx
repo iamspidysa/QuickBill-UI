@@ -36,29 +36,7 @@ const isValidToken = (token) => {
   return token && token !== "null" && token !== "undefined";
 };
 export default function App() {
-  // const location = useLocation();
-
   const { auth } = useContext(AppContext);
-
-  /* Render Issue */
-
-  // const LoginRoute = ({element}) => {
-  //   if(auth.token) {
-  //     return <Navigate to="/dashboard" replace/>;
-  //   }
-  //   return element;
-  // }
-
-  // const ProtectedRoute = ({element, allowedRoles}) => {
-  //   if(!auth.token) {
-  //   return <Navigate to="/login" replace/>
-  //   }
-
-  //   if (allowedRoles && !allowedRoles.includes(auth.role)){
-  //     return <Navigate to="/dashboard" replace/>
-  //   }
-  //   return element;
-  // }
 
   return (
     <div>

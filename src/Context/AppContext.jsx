@@ -20,13 +20,16 @@ export const AppContextProvider = (props) => {
   const [cartItems, setCartItems] = useState([]);
 
   const addToCart = (item) => {
+
+    // Use itemId to identify products because different products can have the same name.
+    // This keeps add, remove, and quantity updates consistent.
     const existingItem = cartItems.find(
-      (cartItem) => cartItem.name === item.name,
+      (cartItem) => cartItem.itemId === item.itemId,
     );
     if (existingItem) {
       setCartItems(
         cartItems.map((cartItem) =>
-          cartItem.name === item.name
+          cartItem.itemId === item.itemId
             ? { ...cartItem, quantity: cartItem.quantity + 1 }
             : cartItem,
         ),
@@ -56,31 +59,8 @@ export const AppContextProvider = (props) => {
     setCartItems([]);
   };
 
-  // After Login Data doenot loads, Token timing issue.
-
-  // useEffect(() => {
-  //   async function loadData() {
-  //     /* This code checks if a JWT token and role exist in localStorage when the app starts.
-  //     If they do, it restores them into React state so the user stays logged in after a page refresh.
-
-  //     Without it, refreshing the page would reset auth state and log the user out.
-  //     It does not validate the token—backend security still handles that.*/
-  //     if (localStorage.getItem("token") && localStorage.getItem("role")) {
-  //       setAuthData(
-  //         localStorage.getItem("token"),
-  //         localStorage.getItem("role"),
-  //       );
-  //     }
-  //     // Load data logic here
-  //     const response = await fetchCategory();
-  //     const itemResponse = await fetchItems();
-  //     setCategories(response.data);
-  //     setItemsData(itemResponse.data);
-  //   }
-
-  //   loadData();
-  // }, []);
-
+  // Fetch categories and items when the user is logged in.
+  // The auth token is already loaded from localStorage.
   useEffect(() => {
     if (!auth?.token) return;
 
